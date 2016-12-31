@@ -4,14 +4,10 @@ if(!set_time_limit(0))
 	die("Could not set infinite script timeout.");
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
-date_default_timezone_set('America/Los_Angeles');
-$baseurl = 'https://api.tidepool.org';
-$loginHash = /*BASE64 of EMAIL:PASSWORD*/;
-$deviceId = /*DEXCOM SERIAL*/;
 $sessionStart = date(DATE_ATOM);
 $sessionToken = FALSE;
 $sessionData = array();
-$UTCoffset = -480;
+
 
 function CheckFile($filename) {
     if(!file_exists($filename))
@@ -63,20 +59,20 @@ function DownloadAllData() {	// not working
 	return $response;
 }
 
-function UploadBG($date, $type, $value) {
+function UploadBG($date, $type, $value, $payload) {
 	if($type == "sgv") {
-		$JSONstring = '{"uploadId":"'.GetUploadID().'","deviceId":"'.$GLOBALS['deviceId'].'","deviceTime":"'.GetDeviceTime($date).'","time":"'.GetUtcTime($date).'","timezoneOffset":'.$GLOBALS['UTCoffset'].',"type":"cbg","units":"mmol/L","value":'.ConvertToMmol($value).'}';
+		$JSONstring = '{"uploadId":"'.GetUploadID().'","deviceId":"'.$GLOBALS['deviceId'].'","deviceTime":"'.GetDeviceTime($date).'","time":"'.GetUtcTime($date).'","timezoneOffset":'.$GLOBALS['UTCoffset'].',"type":"cbg","units":"mmol/L","value":'.ConvertToMmol($value).','.$payload.'}';
 		return UploadData($JSONstring);
 	}
 	if($type == "mbg") {
-		$JSONstring = '{"uploadId":"'.GetUploadID().'","deviceId":"'.$GLOBALS['deviceId'].'","deviceTime":"'.GetDeviceTime($date).'","time":"'.GetUtcTime($date).'","timezoneOffset":'.$GLOBALS['UTCoffset'].',"type":"smbg","subType":"manual","units":"mmol/L","value":'.ConvertToMmol($value).'}';
+		$JSONstring = '{"uploadId":"'.GetUploadID().'","deviceId":"'.$GLOBALS['deviceId'].'","deviceTime":"'.GetDeviceTime($date).'","time":"'.GetUtcTime($date).'","timezoneOffset":'.$GLOBALS['UTCoffset'].',"type":"smbg","subType":"manual","units":"mmol/L","value":'.ConvertToMmol($value).','.$payload.'}';
 		return UploadData($JSONstring);
 	}
 	
 }
 
 function UploadData($JSONstring) {
-	$url =  'https://uploads.tidepool.org/data';
+	$url =  $GLOBALS['uploadapi'].'/data';
 	$ch = curl_init($url);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, 1);

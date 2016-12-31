@@ -72,4 +72,14 @@ foreach ($array as $entry) {
 }
 DisconnectDB();
 rename("v1/data.old", "v1/olddata/".RandomString(12).".".RandomString(4));
+/*
+GetDeviceTime($entry["dateString"])
+*/
+//ConnectDB();
+//echo InsertValue($entry["dateString"], $entry["type"], $entry["mbg"] , "Payload");
+//echo ConfirmUpload("Payload");
+//DisconnectDB();
+
+//'"payload":{"internalTime":"'.GetDeviceTime($entry["dateString"]).'","noiseMode":"Clean","trend":"'. $entry["direction"].'","value":'.ConvertToMmol($entry["sgv"]).'}'
+//"payload":{"subType":"manual","time":"'.GetUTCTime($entry["dateString"]).'","timezoneOffset":'.GetUtcOffset().',"type":"smbg","units":"mmol/L","value":'.ConvertToMmol($entry["sgv"]).'}
 ?>
