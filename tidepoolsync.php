@@ -66,7 +66,7 @@ usort($array, 'sortByDate');
 ConnectDB();
 foreach ($array as $entry) {
 	if($entry["type"] == "sgv")
-		echo InsertValue($entry["dateString"], $entry["type"], $entry["sgv"] , '"payload":{"internalTime":"'.GetDeviceTime($entry["dateString"]).'","delta":'.$entry["delta"].',"noiseMode":"'.$entry["noise"].'","trend":"'. $entry["direction"].'","value"'.ConvertToMmol($entry["sgv"]).'}');
+		echo InsertValue($entry["dateString"], $entry["type"], $entry["sgv"] , '"payload":{"internalTime":"'.GetDeviceTime($entry["dateString"]).'","delta":'.$entry["delta"].',"noiseMode":"'.$entry["noise"].'","trend":"'. $entry["direction"].'","value":'.ConvertToMmol($entry["sgv"]).'}');
 	if($entry["type"] == "mbg")
 		echo InsertValue($entry["dateString"], $entry["type"], $entry["mbg"] , '"payload":{"subType":"manual","time":"'.GetUTCTime($entry["dateString"]).'","timezoneOffset":'.GetUtcOffset().',"type":"smbg","units":"mmol/L","value":'.ConvertToMmol($entry["mbg"]).'}');
 }
