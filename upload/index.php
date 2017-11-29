@@ -29,7 +29,7 @@ if(isset($_FILES["zip_file"]["name"])) {
 			rename("c:\\xampp\\htdocs\\drip\\upload\\".$oldname,"c:\\xampp\\htdocs\\drip\\xdrip.sqlite");
 			unlink($target_path);
 		}
-		$message = "<a href='drip/dbloadfromsqlite.php'>Click Here</a> to import new data.";
+		$message = "<a href='../dbloadfromsqlite.php'>Click Here</a> to import new data.";
 	} else {	
 		$message = "There was a problem with the upload. Please try again.";
 	}
