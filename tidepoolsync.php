@@ -14,8 +14,8 @@ function RandomString($Length)
     }
     return implode($randstring);
 }
-rename("v1/dexcom.data" , "v1/data.old");
-$file = file_get_contents("v1/data.old");
+rename("api/v1/dexcom.data" , "api/v1/data.old");
+$file = file_get_contents("api/v1/data.old");
 $file = str_replace('[','',$file);
 $file = explode("]",$file);
 $json = array();
@@ -71,7 +71,7 @@ foreach ($array as $entry) {
 		echo InsertValue($entry["dateString"], $entry["type"], $entry["mbg"] , '"payload":{"subType":"manual","time":"'.GetUTCTime($entry["dateString"]).'","timezoneOffset":'.GetUtcOffset().',"type":"smbg","units":"mmol/L","value":'.ConvertToMmol($entry["mbg"]).'}');
 }
 DisconnectDB();
-rename("v1/data.old", "v1/olddata/".RandomString(12).".".RandomString(4));
+rename("api/v1/data.old", "api/v1/olddata/".RandomString(12).".".RandomString(4));
 echo "<br>Uploading to Tidepool:<br>";
 Login();
 ConnectDB();
